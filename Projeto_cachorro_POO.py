@@ -10,47 +10,74 @@
 #--Brincar():deixa o cachorro feliz
 #--Latir():imprime uma mensagem indicando que o cachorro está latindo(se estiver acordado)
 
-class Cachorro:
-    def __init__(self, nome, raca, comida, energia, brincar, dormir):
-        """Construtor da classe que inicializa os atributos do cachorro."""
-        self.nome = nome  # Nome do cachorro
-        self.raca = raca  # Raça do cachorro
-        self.comida = comida  # Quantidade de comida disponível
-        self.energia = energia
-        self.brincar = brincar
-        self.dormir = dormir
-        self.acordado = True  # Indica se o cachorro está acordado
-        self.feliz = False  # Indica se o cachorro está feliz
+class Carro:
+    def __init__(self, modelo, ano, cor, combustivel):
+        """Construtor da classe que inicializa os atributos do carro."""
+        self.modelo = modelo  # Modelo do carro
+        self.ano = ano  # Ano de fabricação
+        self.cor = cor  # Cor do carro
+        self.combustivel = combustivel  # Quantidade de combustível
+        self.ligado = False  # Indica se o carro está ligado
+        self.velocidade = 0  # Velocidade atual
 
-        def comer(self, quantidade):
-            """Método para alimentar o cachorro."""
-            if self.comida >= quantidade:
-                self.comida -= quantidade  # Reduz a quantidade de comida disponível
-                self.feliz = True  # O cachorro fica feliz após comer
-                print(f"{self.nome} comeu {quantidade} porções de comida e está feliz!")
+    def ligar(self):
+        """Liga o carro."""
+        if not self.ligado:
+            self.ligado = True
+            print(f"{self.modelo} ligado.")
+        else:
+            print(f"{self.modelo} já está ligado.")
+
+    def desligar(self):
+        """Desliga o carro."""
+        if self.ligado:
+            self.ligado = False
+            self.velocidade = 0  # Velocidade volta para zero ao desligar
+            print(f"{self.modelo} desligado.")
+        else:
+            print(f"{self.modelo} já está desligado.")
+
+    def acelerar(self):
+        """Acelera o carro aumentando a velocidade."""
+        if self.ligado:
+            if self.combustivel > 0:
+                self.velocidade += 10
+                self.combustivel -= 1
+                print(f"{self.modelo} acelerou. Velocidade: {self.velocidade} km/h. Combustível: {self.combustivel}L.")
             else:
-                print(f"{self.nome} não tem comida suficiente para comer!")
+                print("Sem combustível para acelerar.")
+        else:
+            print("O carro está desligado!")
 
-        def dormir(self):
-            """Método para colocar o cachorro para dormir."""
-            self.acordado = False  # Altera o estado para dormindo
-            print(f"{self.nome} agora está dormindo.")
+    def frear(self):
+        """Diminui a velocidade do carro."""
+        if self.ligado and self.velocidade > 0:
+            self.velocidade -= 10
+            print(f"{self.modelo} freou. Velocidade atual: {self.velocidade} km/h.")
+        else:
+            print("O carro já está parado ou desligado.")
 
-        def brincar(self):
-            """Método para brincar com o cachorro."""
-            if self.acordado and self.energia >= 20:
-                self.feliz = True  # Cachorro fica feliz ao brincar
-                print(f"{self.nome} brincou e está muito feliz!")
-                self.energia - 20
-            else:
-                print(f"{self.nome} está dormindo/cansado e não pode brincar agora.")
+    def abastecer(self, quantidade):
+        """Abastece o carro com a quantidade fornecida de combustível."""
+        self.combustivel += quantidade
+        print(f"{self.modelo} abastecido com {quantidade}L. Combustível atual: {self.combustivel}L.")
 
-        def latir(self):
-            """Método para fazer o cachorro latir."""
-            if self.acordado:
-                print(f"{self.nome} está latindo! Au au!")
-            else:
-                print(f"{self.nome} está dormindo e não pode latir agora.")
-        def energia(self):
-            """atributo ligado as ações do cachorro"""
-            self.energia = 100
+    def buzinar(self):
+        """O carro buzina."""
+        print("BEEEEEP!")
+
+    def status(self):
+        """Exibe o status atual do carro."""
+        ligado_str = "ligado" if self.ligado else "desligado"
+        print(f"Modelo: {self.modelo}, Ano: {self.ano}, Cor: {self.cor}, Estado: {ligado_str}, Velocidade: {self.velocidade} km/h, Combustível: {self.combustivel}L")
+
+# Testes
+meu_carro = Carro("Fusca", 1975, "Azul", 10)
+meu_carro.status()
+meu_carro.ligar()
+meu_carro.acelerar()
+meu_carro.frear()
+meu_carro.buzinar()
+meu_carro.abastecer(5)
+meu_carro.status()
+meu_carro.desligar()
